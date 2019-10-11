@@ -18,10 +18,20 @@ var listingsSchema = new mongoose.Schema({
 
 var Listings = mongoose.model('Listings', listingsSchema);
 
-// add database access functions. Add/read/etc
-
 var addMany = (arr, callback) => {
   Listings.insertMany(arr, callback);
 };
 
+// ARRAY OF OBJS WITH _ID AND LISTING PROPS
+var readAllListings = (callback) => {
+  Listings.find({}, 'listing', callback);
+};
+
+// LISTING OBJ
+var readOne = (target, callback) => {
+  Listings.find({listing: target}, callback);
+};
+
 module.exports.addMany = addMany;
+module.exports.readAllListings = readAllListings;
+module.exports.readOne = readOne;

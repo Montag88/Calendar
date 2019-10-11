@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db": "mysql -u root -ppassword < ./server/data/schema.sql",
-    "react-dev": "webpack -w"
+    "react-dev": "webpack -w",
+    "seed-db": "node seed.js"
   },
   "author": "",
   "license": "ISC",
