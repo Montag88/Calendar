@@ -6,25 +6,29 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "react-dev": "webpack -w",
-    "seed-db": "node seed.js"
+    "seed-db": "node seed.js",
+    "server": "nodemon ./server/index.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "eslint-plugin-react-hooks": "^2.1.2",
+    "express": "^4.17.1",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "webpack": "^4.41.0",
+    "webpack": "^4.41.1",
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
     "eslint": "^6.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.7.4",
+    "nodemon": "^1.19.3",
     "path": "^0.12.7"
   }
 }
