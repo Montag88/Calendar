@@ -14,6 +14,8 @@ var listingsSchema = new mongoose.Schema({
   cleaningFee: Number,
   datesReserved: Array, // Array of objs, each obj is a year, contains month props, each month has array of reserved dates
   discounts: Array // Array of discount objs that have two props, discount and type. Applies to ratePerNight. larger daysRequired arranged first
+
+  // ADD SEED DATA TO DATABASE, FOR POPULARITY AND DISCOUNTS
 });
 
 var Listings = mongoose.model('Listings', listingsSchema);

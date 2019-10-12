@@ -12,6 +12,8 @@ discounts => generate discount objects // will only be week or month discounts 7
 serviceFee => // relate to rate per night. Done by equation, Max is 30% for 1 night, decreases to 15% with additional days. Start with 15% of ratePerNight
 
 STRETCH - Different fees and min/max stay lengths per day of week
+
+ADD SEED DATA TO DATABASE, FOR POPULARITY AND DISCOUNTS
 */
 
 // DOES NOT ALWAYS CREATE SAME NUMBER OF LISTINGS AS INPUT
