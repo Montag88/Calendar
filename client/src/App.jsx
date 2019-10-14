@@ -8,7 +8,21 @@ function App () {
     minStayLength: 9,
     ratePerNight: 9999,
     cleaningFee: 999,
-    discounts: []
+    discounts: [],
+    datesReserved: [{
+      January: [],
+      February: [],
+      March: [],
+      April: [],
+      May: [],
+      June: [],
+      July: [],
+      August: [],
+      September: [],
+      October: [],
+      November: [],
+      December: []
+    }]
   });
 
   // on load get a random listing

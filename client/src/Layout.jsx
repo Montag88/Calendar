@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Message from './Message';
+import Calendar from './Calendar';
 
 function Layout(props) {
 
@@ -9,11 +10,14 @@ function Layout(props) {
       <br></br>
       <Message currentListing={props.currentListing} />
       <br></br>
-      Arrows and Month
-      <br></br>
-      Days of the week
-      <br></br>
-      Calendar
+      <table>
+        <tbody>
+          <tr>
+            <td><Calendar currentListing={props.currentListing}/></td>
+            {/* <td><Calendar currentListing={props.currentListing}/></td> */}
+          </tr>
+        </tbody>
+      </table>
       <br></br>
       Clear Dates and Data
     </div>
