@@ -87,3 +87,16 @@ td, th {
   height: 35px;
   width: 35px;
 }
+
+#tool1 {
+  z-index:99;
+  display: none;
+  background: #eee;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    width: 14m; 
+  font-size:.8em;
+}

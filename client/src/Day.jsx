@@ -8,11 +8,16 @@ function Day(props) {
   function handleOnClick() {
     // get all elements with calSelected and remove class from that DOM
     var revertTargets = document.getElementsByClassName('calSelected');
+    // var aside = document.getElementById(`${event.target.id}aside`);
     for (let i = 0; i < revertTargets.length; i++) {
       revertTargets[i].className = "calDay";
     }
     event.target.className += " calSelected";
-    // dispatch();
+    // event.target.setAttribute("aria-expanded", "true");
+    // aside.innerHTML="<span role='tooltip' aria-live='polite'>Hello</span>";
+    // aside.setAttribute("style", "display: block;");
+
+    currentContext.handleOnClick();
   };
 
   if (props.day === null) {
@@ -27,8 +32,9 @@ function Day(props) {
     );
   } else {
     return (
-      <td className="calDay" id={props.day} onClick={handleOnClick}>
+      <td className="calDay" id={props.day.format('D-MMMM-YYYY')} onClick={handleOnClick} aria-expanded="false" aria-describedby={`${props.day.format('D-MMMM-YYYY')}aside`}>
         {props.day.format('D')}
+        {/* <aside id={`${props.day.format('D-MMMM-YYYY')}aside`}></aside> */}
       </td>
     );
   }

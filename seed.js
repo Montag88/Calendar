@@ -28,7 +28,6 @@ var generateListings = (numOfListings) => {
     if (result.indexOf(currentNum) < 0) {
       result.push(currentNum);
     }
-    
   }
   return result;
 };
@@ -59,7 +58,7 @@ var generateDatesReserved = (numOfYears) => {
     numDaysToReserve = Math.floor(Math.random() * 11) + 20;
     break;
   }
-  var results = [];
+  var results = {};
   for (let i = 0; i < numOfYears; i++) {
     var year = moment().year() + i;
     var currentYear = {};
@@ -77,44 +76,35 @@ var generateDatesReserved = (numOfYears) => {
       reservedDates = reservedDates.sort( (a, b) => { return a - b; });
       currentYear[currentMonth] = reservedDates;
     }
-    results.push(currentYear);
+    results[year] = currentYear;
   }
   return results;
 };
 
 var generateDiscounts = () => {
   var generateWeekDiscount = () => {
-    var discount = Math.floor(Math.random() * 11) + 10;
-    return {
-      discount: discount,
-      type: 'weekly'
-    };
+    return Math.floor(Math.random() * 11) + 10;
   };
 
   var generateMonthDiscount = () => {
-    var discount = Math.floor(Math.random() * 16) + 10;
-    return {
-      discount: discount,
-      type: 'monthly'
-    };
+    return Math.floor(Math.random() * 16) + 10;
   };
 
-  var results = [];
+  var results = {};
   var seedType = Math.floor(Math.random() * 4);
 
   switch (seedType) {
   case 1:
-    results.push(generateWeekDiscount());
+    results.week = generateWeekDiscount();
     break;
   case 2:
-    results.push(generateMonthDiscount());
+    results.month = generateMonthDiscount();
     break;
   case 3:
-    results.push(generateMonthDiscount());
-    results.push(generateWeekDiscount());
+    results.week = generateWeekDiscount();
+    results.month = generateMonthDiscount();
     break;
   }
-
   return results;
 };
 

@@ -1,33 +1,43 @@
 import React, { useState, useEffect, useContext } from 'react';
-// import { ClickContext } from './Layout.jsx';
-
+import { CalendarContext } from './Layout.jsx';
 
 function Message(props) {
+  const currentContext = useContext(CalendarContext);
   const [message, changeMessage] = useState('');
 
   // CLEAN UP RENDERING, visibly loads case 0 before rerendering
   function setMessage() {
     var message= '';
     var discounts = props.currentListing.discounts;
-    switch(discounts.length) {
-      case 0:
+    var minStayLength = props.currentListing.minStayLength;
+
+    if (discounts === undefined) {
+      if (currentContext.clickState.click === 'firstclick') {
+        message = `${minStayLength} night minimum stay`;
+      } else {
         message = 'Enter your trip dates for accurate pricing and availability';
-        // ADD EVENTLISTENER TO MESSAGE DOM
-        break;
-      case 1:
-        message = `This host offers a ${discounts[0].discount}% ${discounts[0].type} discount.`;
-        break;
-      case 2:
-        message = `This host offers ${discounts[1].discount}% off if you stay a week and a ${discounts[0].discount}% ${discounts[0].type} discount.`;
-        break;
-    };
+      }
+    } else {
+      switch(Object.keys(discounts).length) {
+        case 1:
+          if (discounts.week !== undefined) {
+            message = `This host offers a ${discounts.week}% weekly discount.`;
+          } else {
+            message = `This host offers a ${discounts.month}% monthly discount.`;
+          }
+          break;
+        case 2:
+          message = `This host offers ${discounts.week}% off if you stay a week and a ${discounts.month}% monthly discount.`;
+          break;
+      };
+    }
     return message;
   }
 
   useEffect(() => {
     var newMessage = setMessage();
     changeMessage(newMessage);
-  }, [props]); // when props changes, message updates
+  }, [props.currentListing, currentContext.clickState.click]);
 
   return (
     <div id="message">

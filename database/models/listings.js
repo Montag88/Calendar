@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/listings');
+var Mixed = mongoose.Schema.Types.Mixed;
 
 var listingsSchema = new mongoose.Schema({
   listing: { // unique ID, 7 digits
@@ -12,8 +13,8 @@ var listingsSchema = new mongoose.Schema({
   }, 
   ratePerNight: Number,
   cleaningFee: Number,
-  datesReserved: Array, // Array of objs, each obj is a year, contains month props, each month has array of reserved dates
-  discounts: Array // Array of discount objs that have two props, discount and type. Applies to ratePerNight. larger daysRequired arranged first
+  datesReserved: Mixed, // Obj, each prop is a year, value contains month props, each month has array of reserved dates
+  discounts: Mixed // Obj with type of discount props, week and month, value is amount of discount. Applies to ratePerNight. larger daysRequired arranged first
 
   // ADD SEED DATA TO DATABASE, FOR POPULARITY AND DISCOUNTS
 });

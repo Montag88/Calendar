@@ -1,28 +1,32 @@
 import React, { useState, useEffect , useLayoutEffect } from 'react';
 import axios from 'axios';
 import Layout from './Layout.jsx';
+import moment from 'moment';
 
 function App () {
+  const currentYear = moment().format('YYYY');
   const [currentListing, changeListing] = useState({
     listing: 9999999,
     minStayLength: 9,
     ratePerNight: 9999,
     cleaningFee: 999,
-    discounts: [],
-    datesReserved: [{
-      January: [],
-      February: [],
-      March: [],
-      April: [],
-      May: [],
-      June: [],
-      July: [],
-      August: [],
-      September: [],
-      October: [],
-      November: [],
-      December: []
-    }]
+    discounts: {},
+    datesReserved: {
+      2019: {
+        January: [],
+        February: [],
+        March: [],
+        April: [],
+        May: [],
+        June: [],
+        July: [],
+        August: [],
+        September: [],
+        October: [],
+        November: [],
+        December: []
+      }
+    }
   });
 
   // on load get a random listing

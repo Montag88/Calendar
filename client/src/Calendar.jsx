@@ -12,8 +12,7 @@ function Calendar(props) {
   function createCalendar(month) {
     var daysInMonth = moment(month).daysInMonth();
     var startDay = moment(`1-${month.format('MMMM-YYYY')}`, 'D-MMMM-YYYY', true).format('d');
-    // CHANGE [0] in line 14 to YEAR prop
-    var datesReserved = props.currentListing.datesReserved[0][month.format('MMMM')];
+    var datesReserved = props.currentListing.datesReserved[month.format('YYYY')][month.format('MMMM')];
     var assembledMonth = [];
     var assembledWeek = [];
     for (let i = 0; i < daysInMonth; i++) {
@@ -86,7 +85,6 @@ function Calendar(props) {
         </table>
       </td>
     </tr>
-    
   );
 };
 
