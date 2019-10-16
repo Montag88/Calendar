@@ -1,45 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import Week from './Week.jsx';
+import { CalendarContext } from './Layout.jsx';
 
 function Calendar(props) {
-  // ARROWS
-  const [currentMonth, setMonth] = useState(moment().format('MMMM'));
-  const [currentYear, setYear] = useState(moment().format('YYYY'));
-  // const [datesReserved, setDatesReserved] = useState([]);
+  const currentContext = useContext(CalendarContext);
+  const setMonth = currentContext.setMonth;
+  var currentMonth = currentContext.dateState.date;
+  var nextMonth = moment(currentMonth).add(1, 'M');
 
-  // useEffect(() => {
-  //   // SHOULD CHANGE DATABASE TO OBJECT WITH YEAR PROPS, change [0] to [currentYear]
-  //   setDatesReserved(props.currentListing.datesReserved[0][currentMonth]);
-  // }, [])
-
-  function createCalendar() {
-    var daysInMonth = moment().daysInMonth();
-    var startDay = moment(`01-${currentMonth}-${currentYear}`, 'DD-MMMM-YYYY', true).format('d');
-    var datesReserved = props.currentListing.datesReserved[0][currentMonth];
-    var month = [];
-    var week = [];
+  function createCalendar(month) {
+    var daysInMonth = moment(month).daysInMonth();
+    var startDay = moment(`1-${month.format('MMMM-YYYY')}`, 'D-MMMM-YYYY', true).format('d');
+    // CHANGE [0] in line 14 to YEAR prop
+    var datesReserved = props.currentListing.datesReserved[0][month.format('MMMM')];
+    var assembledMonth = [];
+    var assembledWeek = [];
     for (let i = 0; i < daysInMonth; i++) {
       if (i === 0) {
         for (let j = 0; j < startDay; j++) {
-          week.push(null);
+          assembledWeek.push(null);
         }
       }
-      week.push(i + 1);
+      assembledWeek.push(moment(`${i + 1}-${month.format('MMMM-YYYY')}`, 'D-MMMM-YYYY', true));
       if (i === daysInMonth - 1) {
-        while(week.length < 7) {
-          week.push(null);
+        while(assembledWeek.length < 7) {
+          assembledWeek.push(null);
         }
       }
-      if (week.length === 7) {
-        month.push(week);
-        week = [];
+      if (assembledWeek.length === 7) {
+        assembledMonth.push(assembledWeek);
+        assembledWeek = [];
       }
     }
 
     return (
       <>
-      {month.map((week) => {
+      {assembledMonth.map((week) => {
         return <Week key={week} datesReserved={datesReserved} week={week} />
       })}
       </>
@@ -57,19 +54,39 @@ function Calendar(props) {
   };
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th className="calHeader">X==</th>
-          <th colSpan="5" className="calHeader">{`${currentMonth} ${currentYear}`}</th>
-          <th className="calHeader">==X</th>
-        </tr>
-      </thead>
-      <tbody>
-        {createCalHeaders()}
-        {createCalendar()}
-      </tbody>
-    </table>
+    <tr>
+      <td>
+        <table>
+          <thead>
+            <tr>
+              <th className="calHeader"><button onClick={() => {setMonth({type: "decrement"})}}>DEC</button></th>
+              <th colSpan="5" className="calHeader">{`${currentMonth.format('MMMM YYYY')}`}</th>
+              <th className="calHeader"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {createCalHeaders()}
+            {createCalendar(currentMonth)}
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table>
+          <thead>
+            <tr>
+              <th className="calHeader"></th>
+              <th colSpan="5" className="calHeader">{`${nextMonth.format('MMMM YYYY')}`}</th>
+              <th className="calHeader"><button onClick={() => {setMonth({type: "increment"})}}>INC</button></th>
+            </tr>
+          </thead>
+          <tbody>
+            {createCalHeaders()}
+            {createCalendar(nextMonth)}
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    
   );
 };
 

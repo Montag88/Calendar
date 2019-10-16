@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+// import { ClickContext } from './Layout.jsx';
+
 
 function Message(props) {
   const [message, changeMessage] = useState('');

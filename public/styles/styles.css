@@ -49,27 +49,41 @@ table {
 
 /* ////////////END OF RESET//////////// */
 
-.calHeader {
+td, th {
   border-color: black;
   border-style: solid;
   border-width: 1px;
+}
+
+.calHeader {
   height: 30px;
-  width: 40px;
+  width: 35px;
 }
 
 .calDay {
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
-  height: 40px;
-  width: 40px;
+  background-color: lightgreen;
+  height: 35px;
+  width: 35px;
 }
 
-.calReserved {
-  background-color: aliceblue;
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
-  height: 40px;
-  width: 40px;
+.calDay:hover {
+  background-color: green;
+}
+
+.calStatic {
+  background-color: lightgray;
+  height: 35px;
+  width: 35px;
+}
+
+.calWhiteSpace {
+  border-style: none;
+  height: 35px;
+  width: 35px;
+}
+
+.calSelected {
+  background-color: cyan;
+  height: 35px;
+  width: 35px;
 }

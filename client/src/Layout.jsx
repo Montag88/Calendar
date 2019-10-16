@@ -1,26 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useReducer } from 'react';
+import moment from 'moment';
 import Message from './Message';
 import Calendar from './Calendar';
 
-function Layout(props) {
+export const CalendarContext = React.createContext(null);
 
+function monthReducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return { date: state.date.add(1, 'M')};
+    case "decrement":
+      return { date: state.date.subtract(1, 'M')};
+  }
+};
+
+function Layout(props) {
+  const [dateState, setMonth] = useReducer(monthReducer, {date: moment()});
   return (
-    <div>
-      Availability
-      <br></br>
-      <Message currentListing={props.currentListing} />
-      <br></br>
-      <table>
-        <tbody>
-          <tr>
-            <td><Calendar currentListing={props.currentListing}/></td>
-            {/* <td><Calendar currentListing={props.currentListing}/></td> */}
-          </tr>
-        </tbody>
-      </table>
-      <br></br>
-      Clear Dates and Data
-    </div>
+    <CalendarContext.Provider value={{
+      setMonth,
+      dateState
+    }}>
+      <div>
+        Availability
+        <br></br>
+          <Message currentListing={props.currentListing} />
+        <br></br>
+        <table>
+          <tbody>
+            <Calendar currentListing={props.currentListing}/>
+          </tbody>
+        </table>
+        <br></br>
+        Clear Dates and Data
+      </div>
+    </CalendarContext.Provider>
   );
 };
 

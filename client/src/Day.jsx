@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer, useContext } from 'react';
+import moment from 'moment';
+import { CalendarContext } from './Layout.jsx';
 
 function Day(props) {
-  // console.log(props.datesReserved)
-  if (props.datesReserved.indexOf(props.day) > -1) {
+  const currentContext = useContext(CalendarContext);
+
+  function handleOnClick() {
+    // get all elements with calSelected and remove class from that DOM
+    var revertTargets = document.getElementsByClassName('calSelected');
+    for (let i = 0; i < revertTargets.length; i++) {
+      revertTargets[i].className = "calDay";
+    }
+    event.target.className += " calSelected";
+    // dispatch();
+  };
+
+  if (props.day === null) {
     return (
-      <td className="calReserved">
-        {props.day}
+      <td className="calWhiteSpace"></td>
+    );
+  } else if (props.day <= moment() || props.datesReserved.indexOf(Number(props.day.format('D'))) > -1) {
+    return (
+      <td className="calStatic">
+        {props.day.format('D')}
       </td>
     );
   } else {
     return (
-      <td className="calDay">
-        {props.day}
+      <td className="calDay" id={props.day} onClick={handleOnClick}>
+        {props.day.format('D')}
       </td>
     );
   }
-
 
 }
  
