@@ -5,28 +5,28 @@ import moment from 'moment';
 
 function App () {
   const currentYear = moment().format('YYYY');
+  const defaultYear = {}
+  defaultYear[currentYear] = {
+    January: [],
+    February: [],
+    March: [],
+    April: [],
+    May: [],
+    June: [],
+    July: [],
+    August: [],
+    September: [],
+    October: [],
+    November: [],
+    December: []
+  }
   const [currentListing, changeListing] = useState({
     listing: 9999999,
     minStayLength: 9,
     ratePerNight: 9999,
     cleaningFee: 999,
     discounts: {},
-    datesReserved: {
-      2019: {
-        January: [],
-        February: [],
-        March: [],
-        April: [],
-        May: [],
-        June: [],
-        July: [],
-        August: [],
-        September: [],
-        October: [],
-        November: [],
-        December: []
-      }
-    }
+    datesReserved: defaultYear
   });
 
   // on load get a random listing

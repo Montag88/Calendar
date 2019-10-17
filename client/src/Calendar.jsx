@@ -12,7 +12,11 @@ function Calendar(props) {
   function createCalendar(month) {
     var daysInMonth = moment(month).daysInMonth();
     var startDay = moment(`1-${month.format('MMMM-YYYY')}`, 'D-MMMM-YYYY', true).format('d');
-    var datesReserved = props.currentListing.datesReserved[month.format('YYYY')][month.format('MMMM')];
+    if (props.currentListing.datesReserved[month.format('YYYY')] === undefined) {
+      var datesReserved = undefined;
+    } else {
+      var datesReserved = props.currentListing.datesReserved[month.format('YYYY')][month.format('MMMM')];
+    }
     var assembledMonth = [];
     var assembledWeek = [];
     for (let i = 0; i < daysInMonth; i++) {
@@ -58,7 +62,7 @@ function Calendar(props) {
         <table>
           <thead>
             <tr>
-              <th className="calHeader"><button onClick={() => {setMonth({type: "decrement"})}}>DEC</button></th>
+              <th className="calHeader"><button onClick={() => {setMonth({type: "decrement"})}}>-</button></th>
               <th colSpan="5" className="calHeader">{`${currentMonth.format('MMMM YYYY')}`}</th>
               <th className="calHeader"></th>
             </tr>
@@ -75,7 +79,7 @@ function Calendar(props) {
             <tr>
               <th className="calHeader"></th>
               <th colSpan="5" className="calHeader">{`${nextMonth.format('MMMM YYYY')}`}</th>
-              <th className="calHeader"><button onClick={() => {setMonth({type: "increment"})}}>INC</button></th>
+              <th className="calHeader"><button onClick={() => {setMonth({type: "increment"})}}>+</button></th>
             </tr>
           </thead>
           <tbody>

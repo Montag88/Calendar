@@ -5,26 +5,35 @@ import { CalendarContext } from './Layout.jsx';
 function Day(props) {
   const currentContext = useContext(CalendarContext);
 
-  function handleOnClick() {
-    // get all elements with calSelected and remove class from that DOM
-    var revertTargets = document.getElementsByClassName('calSelected');
-    // var aside = document.getElementById(`${event.target.id}aside`);
-    for (let i = 0; i < revertTargets.length; i++) {
-      revertTargets[i].className = "calDay";
-    }
-    event.target.className += " calSelected";
-    // event.target.setAttribute("aria-expanded", "true");
-    // aside.innerHTML="<span role='tooltip' aria-live='polite'>Hello</span>";
-    // aside.setAttribute("style", "display: block;");
+  // useEffect(() => {
+  //   revertTargets();
+  // }, [currentContext.targetState])
+  
+  // function revertTargets() {
+  //   // get all elements with calSelected and reset
+  //   var revertTargets = document.getElementsByClassName('calSelected');
+  //   for (let i = 0; i < revertTargets.length; i++) {
+  //     revertTargets[i].className = "calDay";
+  //     var tooltiptext = document.getElementById('tooltiptext');
+  //     tooltiptext.parentNode.removeChild(tooltiptext);
+  //   }
+  // };
 
-    currentContext.handleOnClick();
+  function handleOnClick() {
+    if (currentContext.targetState.target === null) {
+      currentContext.setTarget(event.target.id);
+    }
   };
+
+  var isBeforeCurrentDay = (props.day <= moment());
+  var hasNoData = (props.datesReserved === undefined);
+  var isBeforeSelected = (props.day < moment(currentContext.targetState.target, 'D-MMMM-YYYY', true));
 
   if (props.day === null) {
     return (
       <td className="calWhiteSpace"></td>
     );
-  } else if (props.day <= moment() || props.datesReserved.indexOf(Number(props.day.format('D'))) > -1) {
+  } else if (isBeforeCurrentDay || hasNoData || isBeforeSelected || props.datesReserved.indexOf(Number(props.day.format('D'))) > -1) {
     return (
       <td className="calStatic">
         {props.day.format('D')}
@@ -32,13 +41,11 @@ function Day(props) {
     );
   } else {
     return (
-      <td className="calDay" id={props.day.format('D-MMMM-YYYY')} onClick={handleOnClick} aria-expanded="false" aria-describedby={`${props.day.format('D-MMMM-YYYY')}aside`}>
+      <td className="calDay" id={props.day.format('D-MMMM-YYYY')} onClick={handleOnClick}>
         {props.day.format('D')}
-        {/* <aside id={`${props.day.format('D-MMMM-YYYY')}aside`}></aside> */}
       </td>
     );
   }
-
 }
  
 export default Day;
