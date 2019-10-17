@@ -12,7 +12,7 @@ function Message(props) {
     var minStayLength = props.currentListing.minStayLength;
 
     if (discounts === undefined) {
-      if (currentContext.targetState.target !== null) {
+      if (currentContext.targetState.startDate !== null) {
         message = `${minStayLength} night minimum stay`;
       } else {
         message = 'Enter your trip dates for accurate pricing and availability';
@@ -37,7 +37,7 @@ function Message(props) {
   useEffect(() => {
     var newMessage = setMessage();
     changeMessage(newMessage);
-  }, [props.currentListing, currentContext.targetState.target]);
+  }, [props.currentListing, currentContext.targetState]);
 
   return (
     <div id="message">

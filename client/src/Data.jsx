@@ -3,7 +3,7 @@ import { CalendarContext } from './Layout.jsx';
 
 function Data(props) {
   const currentContext = useContext(CalendarContext);
-  if (currentContext.targetState.target !== null) {
+  if (currentContext.targetState.startDate !== null) {
     return (
       <div onClick={() => {currentContext.setTarget(null)}}>Clear dates</div>
     );

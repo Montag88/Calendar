@@ -5,35 +5,35 @@ import { CalendarContext } from './Layout.jsx';
 function Day(props) {
   const currentContext = useContext(CalendarContext);
 
-  // useEffect(() => {
-  //   revertTargets();
-  // }, [currentContext.targetState])
-  
-  // function revertTargets() {
-  //   // get all elements with calSelected and reset
-  //   var revertTargets = document.getElementsByClassName('calSelected');
-  //   for (let i = 0; i < revertTargets.length; i++) {
-  //     revertTargets[i].className = "calDay";
-  //     var tooltiptext = document.getElementById('tooltiptext');
-  //     tooltiptext.parentNode.removeChild(tooltiptext);
-  //   }
-  // };
-
   function handleOnClick() {
-    if (currentContext.targetState.target === null) {
+    if (currentContext.targetState.startDate === null || currentContext.targetState.endDate === undefined) {
       currentContext.setTarget(event.target.id);
     }
   };
 
-  var isBeforeCurrentDay = (props.day <= moment());
-  var hasNoData = (props.datesReserved === undefined);
-  var isBeforeSelected = (props.day < moment(currentContext.targetState.target, 'D-MMMM-YYYY', true));
+  if (props.day !== null) {
+    var isBeforeCurrentDay = (props.day <= moment());
+    var hasNoData = (props.datesReserved === undefined);
+    var isBeforeSelected = false;
+    var isAfterNextReservation = false;
+  
+    var currentStartDate = moment(currentContext.targetState.startDate, 'D-MMMM-YYYY', true);
+    var nextReservations = props.datesReserved.filter((day) => {
+      return ( day > Number(currentStartDate.format('D')) );
+    });
+    var nextReservedDate = moment(`${nextReservations[0]}-${currentStartDate.format('MMMM-YYYY')}`, 'D-MMMM-YYYY', true);
+
+    if (currentContext.targetState.endDate === undefined && currentContext.targetState.startDate !== null) {
+      isBeforeSelected = (props.day < currentStartDate);
+      isAfterNextReservation = (props.day > nextReservedDate);
+    }
+  }
 
   if (props.day === null) {
     return (
       <td className="calWhiteSpace"></td>
     );
-  } else if (isBeforeCurrentDay || hasNoData || isBeforeSelected || props.datesReserved.indexOf(Number(props.day.format('D'))) > -1) {
+  } else if (isBeforeCurrentDay || hasNoData || isBeforeSelected || isAfterNextReservation || props.datesReserved.indexOf(Number(props.day.format('D'))) > -1) {
     return (
       <td className="calStatic">
         {props.day.format('D')}

@@ -8,7 +8,7 @@ export const CalendarContext = React.createContext(null);
 
 function Layout(props) {
   const [dateState, setMonth] = useReducer(monthReducer, {date: moment()});
-  const [targetState, setTarget] = useReducer(targetReducer, {target: null})
+  const [targetState, setTarget] = useReducer(targetReducer, {startDate: null})
 
   useEffect(() => {
     setTarget(null);
@@ -24,20 +24,30 @@ function Layout(props) {
   };
   
   function targetReducer(state, action) { // action is target id, date
-    if (action !== null) { // if state is already a date, then do something else
-      var target = document.getElementById(action);
-      target.className = "calSelected tooltip";
-      // target.innerHTML += `<span class='tooltiptext' id='tooltiptext'/>${props.currentListing.minStayLength} night minimum stay</span>`;
-    } else {
+    if (action === null) {
       // get all elements with calSelected and reset
       var revertTargets = document.getElementsByClassName('calSelected');
       for (let i = 0; i < revertTargets.length; i++) {
         revertTargets[i].className = "calDay";
-        var tooltiptext = document.getElementById('tooltiptext');
-        tooltiptext.parentNode.removeChild(tooltiptext);
+        // var tooltiptext = document.getElementById('tooltiptext');
+        // tooltiptext.parentNode.removeChild(tooltiptext);
       };
+      return { startDate: action };
+    } else {
+      if (state.startDate === null) {
+        var target = document.getElementById(action);
+        target.className = "calSelected tooltip";
+        // target.innerHTML += `<span class='tooltiptext' id='tooltiptext'/>${props.currentListing.minStayLength} night minimum stay</span>`;
+        return { startDate: action };
+      } else {
+        var target = document.getElementById(action);
+        target.className = "calSelected";
+        return {
+          startDate: state.startDate,
+          endDate: action
+        }
+      }
     }
-    return { target: action };
   };
 
   return (
