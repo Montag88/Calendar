@@ -8,10 +8,11 @@ function Day(props) {
   const endDate = currentContext.targetState.endDate;
   const startDate = currentContext.targetState.startDate;
   const nextReservedDate = currentContext.targetState.nextResDate;
-  const selectableState = currentContext.selectableState.selectDates;
+  const selectableState = currentContext.selectableState;
+  const setSelectableState = currentContext.setSelectableState;
 
   function handleOnClick() {
-    console.log(event.target)
+    // console.log(event.target)
     if ((startDate === null || endDate === undefined) && event.target.className !== styles.calSelected) {
       currentContext.setTarget(event.target.id);
     }
@@ -44,7 +45,10 @@ function Day(props) {
   }
 
   function handleMouseOver() {
-    console.log(event.target);
+    // console.log(event.target);
+    // // use conditional rendering for onMouseOver
+    // // 
+    // setSelectableState(event.target.id);
   }
 
   if (props.day === null) {
@@ -65,7 +69,7 @@ function Day(props) {
     );
   } else {
     return (
-      <td className={styles.calDay} id={props.day.format('D-MMMM-YYYY')} onClick={handleOnClick} onMouseOver={selectableState ? handleMouseOver : undefined}>
+      <td className={styles.calDay} id={props.day.format('D-MMMM-YYYY')} onClick={handleOnClick} onMouseOver={selectableState.selectDates ? handleMouseOver : undefined} >
         {props.day.format('D')}
       </td>
     );

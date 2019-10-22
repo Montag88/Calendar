@@ -22,10 +22,20 @@ function Layout(props) {
     changeHighlight();
   }, [targetState, dateState])
 
+  useEffect(() => {
+    setHighlights();
+  }, [selectableState])
+
   function selectableReducer(state, action) {
-    console.log('ACTION', action)
-    
-    return { selectDates: action };
+    if (state.selectDates === undefined || action === undefined) {
+      return { selectDates: action };
+    } else {
+      console.log('ACTION', action)
+      return { 
+        selectDates: state.selectDates,
+        highlightedDate: action
+      }
+    }
   }
 
   function monthReducer(state, action) {
@@ -39,6 +49,17 @@ function Layout(props) {
         return { date: state.date.subtract(1, 'M')};
     }
   };
+
+  function setHighlights() {
+    if (selectableState.highlightedDate !== undefined) {
+      console.log('SELECTABLE STATE', selectableState)
+      var highlight = selectableState.selectDates.filter((date) => (date <= selectableState.highlightedDate));
+      highlight.map((date) => {
+        var currentDOM = document.getElementById(date);
+        currentDOM.className = dayStyles.calHighlighted;
+      });
+    }
+  }
 
   function changeHighlight() {
     var startDate = targetState.startDate;
@@ -57,9 +78,7 @@ function Layout(props) {
             currentDOM.className = dayStyles.calHighlight;
             highlightDates.push(currentDOM.id);
           }
-          // currentDOM.addEventListener('mouseover', check);
           currentDay.add(1, 'Day');
-          // currentDOM.className += ' calHover';
         }
       }
       setSelectableState(highlightDates);
@@ -71,22 +90,6 @@ function Layout(props) {
         }
       }
       setSelectableState(undefined);
-      // var nextResDate = moment(targetState.nextResDate, 'D-MMMM-YYYY', true);
-      // var currentDay = moment(startDate, 'D-MMMM-YYYY', true);
-      // while (currentDay.isSameOrBefore(nextResDate)) {
-      //   var currentDOM = document.getElementById(currentDay.format('D-MMMM-YYYY'));
-      //   if (currentDOM === null) {
-      //     break;
-      //   } else {
-      //     // console.log('REMOVING LISTENER FROM:',currentDOM)
-      //     // currentDOM.removeEventListener('mouseover', check);
-      //     if (currentDOM.className !== dayStyles.calSelected) {
-      //       // add currentDOM id to a state array
-      //       currentDOM.className = dayStyles.calDay;
-      //     }
-      //     currentDay.add(1, 'Day');
-      //   }
-      // }
     }
   }
 

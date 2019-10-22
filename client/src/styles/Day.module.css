@@ -69,7 +69,20 @@
   border: 2px solid rgb(255, 255, 255);
   border-radius: 7px;
 }
+
 .calHighlight:hover {
   color: rgb(255, 255, 255);
   background-color: rgb(176, 221, 221);
+}
+
+.calHighlighted {
+  color: rgb(255, 255, 255);
+  background-color: rgb(176, 221, 221);
+  font-weight: 700;
+  font-size: 90%;
+  text-align: center;
+  vertical-align: middle;
+
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 7px;
 }
