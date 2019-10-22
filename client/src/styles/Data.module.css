@@ -1,0 +1,44 @@
+.calClear {
+  padding: 0px 35px 0px 0px;
+}
+.calData {
+  padding: 0px 35px 0px 0px;
+}
+
+.clearButton {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+  color: rgb(0, 132, 137);
+  font-size: 100%;
+  font-weight: 100;
+}
+.clearButton:hover {
+  text-decoration: underline;
+}
+.dataDescription {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+  color: rgb(50, 50, 50);
+  font-size: 90%;
+  font-weight: 100;
+  width: 150px;
+  height: 30px;
+}
+
+.dataNumber {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+  color: rgb(50, 50, 50);
+  font-size: 90%;
+  font-weight: 100;
+  text-align: right;
+  width: 100px;
+  height: 30px;
+}
+
+.reserveButton {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+  color: rgb(255, 90, 95);
+  font-size: 100%;
+  font-weight: 100;
+}
+.reserveButton:hover {
+  text-decoration: underline;
+}

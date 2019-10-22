@@ -1,0 +1,28 @@
+.calDayHeader {
+  color: rgb(139, 138, 138);
+
+  width: 35px;
+  text-align: center;
+  vertical-align: bottom;
+  font-size: 75%;
+  border: 9px solid rgb(255, 255, 255);
+  font-weight: 100;
+}
+
+.calSpace {
+  padding: 0px 35px 0px 0px;
+}
+
+.calHeader {
+  font-weight: 600;
+  height: 50px;
+  width: 30px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 125%;
+  color: rgb(50, 50, 50);
+}
+
+.cal {
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+}

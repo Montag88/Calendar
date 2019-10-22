@@ -49,46 +49,30 @@ table {
 
 /* ////////////END OF RESET//////////// */
 
-td, th {
+/* td, th {
   border-color: black;
   border-style: solid;
   border-width: 1px;
-}
+} */
 
-.calHeader {
-  height: 30px;
-  width: 35px;
-}
 
-.calDay {
-  background-color: lightgreen;
-  height: 35px;
-  width: 35px;
-}
 
-.calDay:hover {
-  background-color: green;
-}
 
-.calStatic {
-  background-color: lightgray;
-  height: 35px;
-  width: 35px;
-}
 
-.calWhiteSpace {
-  border-style: none;
-  height: 35px;
-  width: 35px;
-}
 
-.calSelected {
-  background-color: cyan;
-  height: 35px;
-  width: 35px;
-}
 
-.tooltip {
+
+
+
+
+
+
+
+
+
+
+
+/* .tooltip {
   position: relative;
 }
 
@@ -109,4 +93,4 @@ td, th {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
-}
+} */

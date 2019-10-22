@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { CalendarContext } from './Layout.jsx';
+import styles from './styles/Message.module.css';
 
 function Message(props) {
   const currentContext = useContext(CalendarContext);
@@ -40,7 +41,7 @@ function Message(props) {
   }, [props.currentListing, currentContext.targetState]);
 
   return (
-    <div id="message">
+    <div className={styles.message}>
       {message}
     </div>
   );

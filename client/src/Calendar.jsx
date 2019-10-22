@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import Week from './Week.jsx';
 import { CalendarContext } from './Layout.jsx';
+import styles from './styles/Calendar.module.css'
 
 function Calendar(props) {
   const currentContext = useContext(CalendarContext);
   const setMonth = currentContext.setMonth;
-  var currentMonth = currentContext.dateState.date;
+  var currentMonth = moment(currentContext.dateState.date);
   var nextMonth = moment(currentMonth).add(1, 'M');
 
   function createCalendar(month) {
@@ -46,11 +47,17 @@ function Calendar(props) {
     );
   }
 
+  function onClickHandler(type) {
+    event.stopPropagation();
+    console.log(event)
+    setMonth({type: type});
+  }
+
   function createCalHeaders() {
     return(
       <tr>
       {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((dayHeader) => {
-            return <th className="calHeader" key={dayHeader}>{dayHeader}</th>
+            return <th className={styles.calDayHeader} key={dayHeader}>{dayHeader}</th>
           })}
       </tr>
     );
@@ -58,13 +65,13 @@ function Calendar(props) {
 
   return (
     <tr>
-      <td>
-        <table>
+      <td className={styles.calSpace}>
+        <table className={styles.cal}>
           <thead>
             <tr>
-              <th className="calHeader"><button onClick={() => {setMonth({type: "decrement"})}}>-</button></th>
-              <th colSpan="5" className="calHeader">{`${currentMonth.format('MMMM YYYY')}`}</th>
-              <th className="calHeader"></th>
+              <th className={styles.calHeader} ><button onClick={() => {onClickHandler('decrement')}}>-</button></th>
+              <th colSpan="5" className={styles.calHeader}>{`${currentMonth.format('MMMM YYYY')}`}</th>
+              <th className={styles.calHeader}></th>
             </tr>
           </thead>
           <tbody>
@@ -74,12 +81,12 @@ function Calendar(props) {
         </table>
       </td>
       <td>
-        <table>
+        <table className={styles.cal}>
           <thead>
             <tr>
-              <th className="calHeader"></th>
-              <th colSpan="5" className="calHeader">{`${nextMonth.format('MMMM YYYY')}`}</th>
-              <th className="calHeader"><button onClick={() => {setMonth({type: "increment"})}}>+</button></th>
+              <th className={styles.calHeader}></th>
+              <th colSpan="5" className={styles.calHeader}>{`${nextMonth.format('MMMM YYYY')}`}</th>
+              <th className={styles.calHeader}><button onClick={() => {onClickHandler('increment')}}>+</button></th>
             </tr>
           </thead>
           <tbody>

@@ -11,6 +11,7 @@ var listingsSchema = new mongoose.Schema({
     type: Number,
     default: 1
   }, 
+  maxStayLength: Number,
   ratePerNight: Number,
   cleaningFee: Number,
   datesReserved: Mixed, // Obj, each prop is a year, value contains month props, each month has array of reserved dates

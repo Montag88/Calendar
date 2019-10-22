@@ -51,13 +51,17 @@ function App () {
             <ul>
               <li>Current Listing: {currentListing.listing}</li>
               <li>Minimum Stay Length: {currentListing.minStayLength}</li>
+              <li>Max Stay Length: {currentListing.maxStayLength}</li>
               <li>Rate Per Night: {currentListing.ratePerNight}</li>
               <li>Cleaning Fee: {currentListing.cleaningFee}</li>
             </ul>
           </div>
       </span>
       <hr></hr>
+      <br></br>
       <Layout currentListing={currentListing}/>
+      <br></br>
+      <hr></hr>
     </div>
   );
 };
