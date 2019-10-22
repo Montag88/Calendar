@@ -1,6 +1,6 @@
 import React, { useState, useEffect , useLayoutEffect } from 'react';
 import axios from 'axios';
-import Layout from './Layout.jsx';
+import CalendarLayout from './CalendarLayout.jsx';
 import moment from 'moment';
 
 function App () {
@@ -59,7 +59,7 @@ function App () {
       </span>
       <hr></hr>
       <br></br>
-      <Layout currentListing={currentListing}/>
+      <CalendarLayout currentListing={currentListing}/>
       <br></br>
       <hr></hr>
     </div>

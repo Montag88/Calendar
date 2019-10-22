@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import moment from 'moment';
-import { CalendarContext } from './Layout.jsx';
+import { CalendarContext } from './CalendarLayout.jsx';
 import styles from './styles/Day.module.css';
 
 function Day(props) {

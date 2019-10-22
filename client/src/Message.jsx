@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { CalendarContext } from './Layout.jsx';
+import { CalendarContext } from './CalendarLayout.jsx';
 import styles from './styles/Message.module.css';
 
 function Message(props) {

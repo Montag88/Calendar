@@ -4,11 +4,12 @@ import Message from './Message';
 import Calendar from './Calendar';
 import Data from './Data';
 import dayStyles from './styles/Day.module.css';
-import layoutStyles from './styles/Layout.module.css';
+import layoutStyles from './styles/CalendarLayout.module.css';
+import './styles/reset.css';
 
 export const CalendarContext = React.createContext(null);
 
-function Layout(props) {
+function CalendarLayout(props) {
   const [dateState, setMonth] = useReducer(monthReducer, {date: moment()}); 
   // MAY RUN INTO CONFLICT WHEN DATE IS AT 30 or 31
   const [targetState, setTarget] = useReducer(targetReducer, {startDate: null});
@@ -161,4 +162,4 @@ function Layout(props) {
   );
 };
 
-export default Layout;
+export default CalendarLayout;

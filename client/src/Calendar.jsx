@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import Week from './Week.jsx';
-import { CalendarContext } from './Layout.jsx';
+import { CalendarContext } from './CalendarLayout.jsx';
 import styles from './styles/Calendar.module.css'
 
 function Calendar(props) {
