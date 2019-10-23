@@ -34,9 +34,25 @@ function App () {
     getListing();
   }, [])
 
-  function getListing() {
-    axios.get('http://localhost:3000/rooms')
+  function getRandomListing() {
+    axios.get('http://localhost:3010/rooms')
     .then((response) => {
+      // console.log('URL', window.location);
+      // console.log('RESPONSE DATA', response.data);
+      // REDIRECT URL TO RESPONSE.DATA listing id
+      // then change listing to result of that GET request
+      changeListing(response.data[0]);
+    })
+  }
+
+  function getListing() {
+    // console.log('WINDOW LOCATION', document.location.pathname)
+    var location = document.location.pathname;
+    var regex = RegExp(/\d{7}/);
+    var listingID = regex.exec(location)[0];
+    axios.get(`http://localhost:3010/listings/${listingID}`)
+    .then((response) => {
+      // console.log(response.data[0])
       changeListing(response.data[0]);
     })
   }
@@ -44,19 +60,6 @@ function App () {
   // RENDER LAYOUT AFTER GETTING FIRST LISTING
   return (
     <div>
-      <span>
-        <button onClick={getListing}>GET RANDOM LISTING</button>
-        <br></br>
-          <div>
-            <ul>
-              <li>Current Listing: {currentListing.listing}</li>
-              <li>Minimum Stay Length: {currentListing.minStayLength}</li>
-              <li>Max Stay Length: {currentListing.maxStayLength}</li>
-              <li>Rate Per Night: {currentListing.ratePerNight}</li>
-              <li>Cleaning Fee: {currentListing.cleaningFee}</li>
-            </ul>
-          </div>
-      </span>
       <hr></hr>
       <br></br>
       <CalendarLayout currentListing={currentListing}/>

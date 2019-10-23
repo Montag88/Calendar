@@ -49,7 +49,7 @@ function Calendar(props) {
 
   function onClickHandler(type) {
     event.stopPropagation();
-    console.log(event)
+    // console.log(event)
     setMonth({type: type});
   }
 

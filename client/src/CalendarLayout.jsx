@@ -31,7 +31,7 @@ function CalendarLayout(props) {
     if (state.selectDates === undefined || action === undefined) {
       return { selectDates: action };
     } else {
-      console.log('ACTION', action)
+      // console.log('ACTION', action)
       return { 
         selectDates: state.selectDates,
         highlightedDate: action
@@ -40,20 +40,20 @@ function CalendarLayout(props) {
   }
 
   function monthReducer(state, action) {
-    console.log(state, action) // TRIGGERS TWICE?
+    // console.log(state, action) // TRIGGERS TWICE?
     switch (action.type) {
       case 'increment':
-        console.log('inc once')
+        // console.log('inc once')
         return { date: state.date.add(1, 'M')};
       case 'decrement':
-        console.log('dec once')
+        // console.log('dec once')
         return { date: state.date.subtract(1, 'M')};
     }
   };
 
   function setHighlights() {
     if (selectableState.highlightedDate !== undefined) {
-      console.log('SELECTABLE STATE', selectableState)
+      // console.log('SELECTABLE STATE', selectableState)
       var highlight = selectableState.selectDates.filter((date) => (date <= selectableState.highlightedDate));
       highlight.map((date) => {
         var currentDOM = document.getElementById(date);

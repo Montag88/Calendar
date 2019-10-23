@@ -1,35 +1,48 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
-const port = 3000;
+const port = 3010;
 const db = require('../database/models/listings.js');
 
-app.use(express.static(__dirname + '/../public'));
+app.use('/', express.static(__dirname + '/../public'));
+
+app.use('/rooms/:id', express.static(__dirname + '/../public'));
+
 
 // CONVERT ALL TO PROMISES
 
 // GET ALL LISTINGS, RETURNS ARRAY OF LISTINGS
-app.get('/rooms', (req, res) => {
-  // use db.readAllListings to get all listings
-  // reformat all listings to array of listings, here or on db side
-  // get random listing from all listings
-  // get info about one listing
-  // respond json obj of one listing, with status 200
-  db.readAllListings((err, result) => {
+// app.get('/rooms', cors(), (req, res) => {
+//   // use db.readAllListings to get all listings
+//   // reformat all listings to array of listings, here or on db side
+//   // get random listing from all listings
+//   // get info about one listing
+//   // respond json obj of one listing, with status 200
+//   db.readAllListings((err, result) => {
+//     if (err) {
+//       res.status(404).send(err);
+//     }
+//     var randomIndex = Math.floor(Math.random() * result.length);
+//     res.status(200).json(result[randomIndex].listing);
+
+//     // db.readOne(result[randomIndex].listing, (err, result) => {
+//     //   if (err) {
+//     //     res.status(404).send(err);
+//     //   }
+//     //   res.status(200).json(result);
+//     // });
+//   });
+// });
+
+// GET INFO ABOUT A SINGLE LISTING
+app.get('/listings/:id', cors(), (req, res) => {
+  const listing = Number(req.params.id);
+  db.readOne(listing, (err, result) => {
     if (err) {
       res.status(404).send(err);
     }
-    var randomIndex = Math.floor(Math.random() * result.length);
-    db.readOne(result[randomIndex].listing, (err, result) => {
-      if (err) {
-        res.status(404).send(err);
-      }
-      res.status(200).json(result);
-    });
+    res.status(200).json(result);
   });
-});
-
-// GET INFO ABOUT A SINGLE LISTING
-app.get('/rooms/:id', (req, res) => {
   // use BODY PARSER JSON
   // use db.readOne to get info about listing in req.body
   // respond with json obj with status 200
