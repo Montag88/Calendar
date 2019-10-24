@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "build": "webpack",
     "react-dev": "webpack -w",
     "seed-db": "node seed.js",
     "server": "nodemon ./server/index.js"

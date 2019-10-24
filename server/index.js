@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 const port = 3010;
 const db = require('../database/models/listings.js');
 
-app.use('/', express.static(__dirname + '/../public'));
+app.use(express.static(path.resolve(__dirname, '../public')));
 
-app.use('/rooms/:id', express.static(__dirname + '/../public'));
+app.use('/rooms/:id', express.static(path.resolve(__dirname, '../public')));
 
 
 // CONVERT ALL TO PROMISES

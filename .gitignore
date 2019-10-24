@@ -24,3 +24,6 @@ coverage
 build/
 dist/
 
+# JSON
+package-lock.json
+
