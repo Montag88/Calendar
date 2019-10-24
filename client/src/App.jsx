@@ -48,12 +48,14 @@ function App () {
   function getListing() {
     // console.log('WINDOW LOCATION', document.location.pathname)
     var location = document.location.pathname;
-    var regex = RegExp(/\d{7}/);
-    var listingID = regex.exec(location)[0];
+    // var regex = RegExp(/\d{7}/);
+    // var listingID = regex.exec(location)[0];
+    var listingID = location.slice(7);
     axios.get(`http://localhost:3010/listings/${listingID}`)
     .then((response) => {
-      // console.log(response.data[0])
-      changeListing(response.data[0]);
+      if (response.data.length !== 0) {
+        changeListing(response.data[0]);
+      }
     })
   }
   

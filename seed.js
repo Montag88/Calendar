@@ -20,15 +20,21 @@ ADD SEED DATA TO DATABASE, FOR POPULARITY AND DISCOUNTS
 // DOES NOT ALWAYS CREATE SAME NUMBER OF LISTINGS AS INPUT
 var generateListings = (numOfListings) => {
   var result = [];
+  // RANDOM 7 DIGIT NUMBERS
+  // for (let i = 0; i < numOfListings; i++) {
+  //   var currentNum = '';
+  //   for (let j = 0; j < 7; j++) {
+  //     currentNum += Math.floor(Math.random() * 10);
+  //   }
+  //   currentNum = Number(currentNum);
+  //   if (result.indexOf(currentNum) < 0) {
+  //     result.push(currentNum);
+  //   }
+  // }
+  
+  // ORDERED LISTINGS
   for (let i = 0; i < numOfListings; i++) {
-    var currentNum = '';
-    for (let j = 0; j < 7; j++) {
-      currentNum += Math.floor(Math.random() * 10);
-    }
-    currentNum = Number(currentNum);
-    if (result.indexOf(currentNum) < 0) {
-      result.push(currentNum);
-    }
+    result.push(i);
   }
   return result;
 };
