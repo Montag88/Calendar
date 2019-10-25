@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 // CHANGE BELOW TO DATABASE WHEN USING DOCKER COMPOSE
-mongoose.connect('mongodb://localhost/listings');
+mongoose.connect('mongodb://database/listings');
 var Mixed = mongoose.Schema.Types.Mixed;
 
 var listingsSchema = new mongoose.Schema({
