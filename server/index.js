@@ -5,6 +5,8 @@ const app = express();
 const port = 3010;
 const db = require('../database/models/listings.js');
 
+app.use(cors());
+
 app.use(express.static(path.resolve(__dirname, '../public')));
 
 app.use('/rooms/:id', express.static(path.resolve(__dirname, '../public')));
