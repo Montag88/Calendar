@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import { CalendarContext } from './CalendarLayout.jsx';
 import moment from 'moment';
 import styles from './styles/Data.module.css';
@@ -7,11 +7,12 @@ function Data(props) {
   const currentContext = useContext(CalendarContext);
   const startDate = moment(currentContext.targetState.startDate, 'D-MMMM-YYYY', true);
   const endDate = moment(currentContext.targetState.endDate, 'D-MMMM-YYYY', true);
+  const nights = currentContext.nightsState;
 
   function generateData() {
-    if (startDate.isValid() && endDate.isValid()) {
+    if (startDate.isValid() && nights !== null && nights !== 0) {
       var ratePerNight = props.currentListing.ratePerNight;
-      var nights = endDate.diff(startDate, 'days');
+
       var costOfStay = ratePerNight * nights;
       var cleaningFee = props.currentListing.cleaningFee;
       var serviceFee = Math.round(costOfStay * .15);
@@ -35,8 +36,8 @@ function Data(props) {
               <td className={styles.dataNumber}>{`$${serviceFee}`}</td>
             </tr>
             <tr>
-              <td className={styles.dataDescription}>Estimate total</td>
-              <td className={styles.dataNumber}>{`$${totalCost}`}</td>
+              <td className={styles.dataTotal}>Estimate total</td>
+              <td className={styles.dataTotalNumber}>{`$${totalCost}`}</td>
             </tr>
           </tbody>
         </table>
@@ -47,6 +48,7 @@ function Data(props) {
   }
   function onClearHandler() {
     currentContext.setTarget(null);
+    currentContext.setNightsState(null);
   }
   function createReserve() {
     if (startDate.isValid() && endDate.isValid()) {

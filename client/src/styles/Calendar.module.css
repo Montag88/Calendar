@@ -1,11 +1,14 @@
 .calDayHeader {
-  color: rgb(139, 138, 138);
+  color: rgb(138, 138, 138);
 
-  width: 35px;
+  width: 20px;
+  height: 30px;
+
+  padding: 0px 0px 4px 0px;
+
   text-align: center;
   vertical-align: bottom;
   font-size: 75%;
-  border: 9px solid rgb(255, 255, 255);
   font-weight: 100;
 }
 
@@ -14,13 +17,23 @@
 }
 
 .calHeader {
-  font-weight: 600;
-  height: 50px;
-  width: 30px;
+  font-weight: 700;
+
   text-align: center;
   vertical-align: middle;
-  font-size: 125%;
-  color: rgb(50, 50, 50);
+  font-size: 110%;
+  color: rgba(50, 50, 50, 0.900);
+
+}
+
+.calArrow {
+  border: 1px solid rgba(192, 192, 192, 0.5);
+  border-radius: 3px;
+
+  height: 32px;
+  width: 38px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .cal {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import CalendarLayout from './CalendarLayout.jsx';
 import moment from 'moment';
 
+
 function App () {
   const currentYear = moment().format('YYYY');
   const defaultYear = {}
@@ -62,11 +63,9 @@ function App () {
   // RENDER LAYOUT AFTER GETTING FIRST LISTING
   return (
     <div>
-      <hr></hr>
       <br></br>
       <CalendarLayout currentListing={currentListing}/>
       <br></br>
-      <hr></hr>
     </div>
   );
 };

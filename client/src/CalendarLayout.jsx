@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import moment from 'moment';
 import Message from './Message';
 import Calendar from './Calendar';
@@ -10,89 +10,34 @@ import './styles/reset.css';
 export const CalendarContext = React.createContext(null);
 
 function CalendarLayout(props) {
-  const [dateState, setMonth] = useReducer(monthReducer, {date: moment()}); 
+  const [dateState, setMonth] = useReducer(monthReducer, {date: moment().format('MMMM YYYY')}); 
   // MAY RUN INTO CONFLICT WHEN DATE IS AT 30 or 31
   const [targetState, setTarget] = useReducer(targetReducer, {startDate: null});
-  const [selectableState, setSelectableState] = useReducer(selectableReducer, {selectDates: undefined});
+  const [highlightState, setHighlightState] = useState(null);
+  const [nightsState, setNightsState] = useState(null);
 
   useEffect(() => {
     setTarget(null);
   }, [props.currentListing])
 
   useEffect(() => {
-    changeHighlight();
-  }, [targetState, dateState])
+    setHighlightState(null);
+  }, [targetState])
 
   useEffect(() => {
-    setHighlights();
-  }, [selectableState])
-
-  function selectableReducer(state, action) {
-    if (state.selectDates === undefined || action === undefined) {
-      return { selectDates: action };
-    } else {
-      // console.log('ACTION', action)
-      return { 
-        selectDates: state.selectDates,
-        highlightedDate: action
-      }
+    if (targetState.startDate !== null) {
+      changeNights();
     }
-  }
+  }, [highlightState])
 
   function monthReducer(state, action) {
-    // console.log(state, action) // TRIGGERS TWICE?
     switch (action.type) {
       case 'increment':
-        // console.log('inc once')
-        return { date: state.date.add(1, 'M')};
+        return { date: moment(state.date, 'MMMM YYYY').add(1, 'M').format('MMMM YYYY') };
       case 'decrement':
-        // console.log('dec once')
-        return { date: state.date.subtract(1, 'M')};
+        return { date: moment(state.date, 'MMMM YYYY').subtract(1, 'M').format('MMMM YYYY') };
     }
   };
-
-  function setHighlights() {
-    if (selectableState.highlightedDate !== undefined) {
-      // console.log('SELECTABLE STATE', selectableState)
-      var highlight = selectableState.selectDates.filter((date) => (date <= selectableState.highlightedDate));
-      highlight.map((date) => {
-        var currentDOM = document.getElementById(date);
-        currentDOM.className = dayStyles.calHighlighted;
-      });
-    }
-  }
-
-  function changeHighlight() {
-    var startDate = targetState.startDate;
-    var endDate = targetState.endDate;
-
-    if (startDate !== null && endDate === undefined) {
-      var nextResDate = moment(targetState.nextResDate, 'D-MMMM-YYYY', true);
-      var currentDay = moment(startDate, 'D-MMMM-YYYY', true);
-      var highlightDates = [];
-      while (currentDay.isSameOrBefore(nextResDate)) {
-        var currentDOM = document.getElementById(currentDay.format('D-MMMM-YYYY'));
-        if (currentDOM === null) {
-          break;
-        } else {
-          if (currentDOM.className !== dayStyles.calSelected) {
-            currentDOM.className = dayStyles.calHighlight;
-            highlightDates.push(currentDOM.id);
-          }
-          currentDay.add(1, 'Day');
-        }
-      }
-      setSelectableState(highlightDates);
-    } else if (endDate !== undefined) {
-      for (let i = 0; i < selectableState.length; i++) {
-        var currentDOM = document.getElementById(selectableState[i].format('D-MMMM-YYYY'));
-        if (currentDOM.className !== dayStyles.calSelected) {
-          currentDOM.className = dayStyles.calDay;
-        }
-      }
-      setSelectableState(undefined);
-    }
-  }
 
   function targetReducer(state, action) { // action is target id, non-moment date
     if (action === null) {
@@ -137,13 +82,26 @@ function CalendarLayout(props) {
     }
   };
 
+  function changeNights() {
+    var highlightedDate = moment(highlightState, 'D-MMMM-YYYY', true);
+    var startDate = moment(targetState.startDate, 'D-MMMM-YYYY', true);
+    var endDate = moment(targetState.endDate, 'D-MMMM-YYYY', true);
+    if (!endDate.isValid()) {
+      var nights = highlightedDate.diff(startDate, 'days');
+      setNightsState(nights);
+    } else {
+      setNightsState(endDate.diff(startDate, 'days'));
+    }
+  }
+
   return (
     <CalendarContext.Provider value={{
       dateState, setMonth,
       targetState, setTarget,
-      selectableState, setSelectableState
+      highlightState, setHighlightState,
+      nightsState, setNightsState
     }}>
-      <div>
+      <div className={layoutStyles.layout}>
         <span className={layoutStyles.calComponentHeader}>Availability</span>
         <br></br>
         <br></br>

@@ -16,21 +16,33 @@
 }
 .dataDescription {
   font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
-  color: rgb(50, 50, 50);
-  font-size: 90%;
+  color: rgba(50, 50, 50, 0.900);
+  font-size: 85%;
   font-weight: 100;
   width: 150px;
   height: 30px;
 }
 
+.dataTotal {
+  composes: dataDescription;
+
+  font-weight: bold;
+}
+
 .dataNumber {
   font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
-  color: rgb(50, 50, 50);
-  font-size: 90%;
+  color: rgba(50, 50, 50, 0.900);
+  font-size: 85%;
   font-weight: 100;
   text-align: right;
   width: 100px;
   height: 30px;
+}
+
+.dataTotalNumber {
+  composes: dataNumber;
+  
+  font-weight: bold;
 }
 
 .reserveButton {

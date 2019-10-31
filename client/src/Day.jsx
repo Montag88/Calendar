@@ -1,22 +1,26 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
 import { CalendarContext } from './CalendarLayout.jsx';
 import styles from './styles/Day.module.css';
 
 function Day(props) {
   const currentContext = useContext(CalendarContext);
+
   const endDate = currentContext.targetState.endDate;
   const startDate = currentContext.targetState.startDate;
   const nextReservedDate = currentContext.targetState.nextResDate;
-  const selectableState = currentContext.selectableState;
-  const setSelectableState = currentContext.setSelectableState;
+  const highlightState = currentContext.highlightState;
+  const setHighlightState = currentContext.setHighlightState;
 
   function handleOnClick() {
-    // console.log(event.target)
     if ((startDate === null || endDate === undefined) && event.target.className !== styles.calSelected) {
       currentContext.setTarget(event.target.id);
     }
   };
+
+  function handleMouseOver() {
+    setHighlightState(event.target.id);
+  }
 
   if (props.day !== null) {
     var isBeforeCurrentDay = (props.day <= moment());
@@ -28,27 +32,28 @@ function Day(props) {
 
     var isBeforeSelected = false;
     var isAfterNextReservation = false;
+    var isBetweenStartAndHighlight = false;
     var isNotEndDate = true;
-  
-    if (endDate === undefined && startDate !== null) {
+    
+    var startIsSelected = (endDate === undefined && startDate !== null);
+    var endIsSelected = endDate !== undefined;
+
+    if (startIsSelected) {
       var currentStartDate = moment(startDate, 'D-MMMM-YYYY', true);
+      var currentHighlight = moment(highlightState, 'D-MMMM-YYYY', true);
+
       isReserved = false;
       isBeforeSelected = (props.day < currentStartDate);
       isAfterNextReservation = (props.day.isAfter(moment(nextReservedDate, 'D-MMMM-YYYY', true)));
+      isBetweenStartAndHighlight = (props.day > currentStartDate) && (props.day <= currentHighlight);
     }
-    if (endDate !== undefined) { // can optimize here by adding more conditions only applicable to select days
-      isNotEndDate = !(props.day.isSame(moment(endDate, 'D-MMMM-YYYY', true)));
+    if (endIsSelected) { // can optimize here by adding more conditions only applicable to select days
       var currentStartDate = moment(startDate, 'D-MMMM-YYYY', true);
       var currentEndDate = moment(endDate, 'D-MMMM-YYYY', true);
-      var isBetweenStartAndEnd = (props.day.isAfter(currentStartDate) && props.day.isBefore(currentEndDate));
-    }
-  }
 
-  function handleMouseOver() {
-    // console.log(event.target);
-    // // use conditional rendering for onMouseOver
-    // // 
-    // setSelectableState(event.target.id);
+      isNotEndDate = !(props.day.isSame(moment(endDate, 'D-MMMM-YYYY', true)));
+      var isBetweenStartAndEnd = (props.day.isAfter(currentStartDate) && props.day.isSameOrBefore(currentEndDate));
+    }
   }
 
   if (props.day === null) {
@@ -61,6 +66,13 @@ function Day(props) {
         {props.day.format('D')}
       </td>
     );
+  } else if (isBetweenStartAndHighlight) {
+    return (
+      <td className={styles.calHighlight} id={props.day.format('D-MMMM-YYYY')} onClick={handleOnClick}
+      onMouseOver={handleMouseOver}>
+        {props.day.format('D')}
+      </td>
+    );
   } else if ( (isBeforeCurrentDay || isBeforeSelected || isAfterNextReservation || isReserved) && isNotEndDate ) {
     return (
       <td className={styles.calStatic} id={props.day.format('D-MMMM-YYYY')}>
@@ -69,7 +81,7 @@ function Day(props) {
     );
   } else {
     return (
-      <td className={styles.calDay} id={props.day.format('D-MMMM-YYYY')} onClick={handleOnClick} onMouseOver={selectableState.selectDates ? handleMouseOver : undefined} >
+      <td className={styles.calDay} id={props.day.format('D-MMMM-YYYY')} onClick={handleOnClick} onMouseOver={startIsSelected ? handleMouseOver : undefined} >
         {props.day.format('D')}
       </td>
     );

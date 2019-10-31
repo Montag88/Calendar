@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
 import Week from './Week.jsx';
 import { CalendarContext } from './CalendarLayout.jsx';
@@ -7,8 +7,8 @@ import styles from './styles/Calendar.module.css'
 function Calendar(props) {
   const currentContext = useContext(CalendarContext);
   const setMonth = currentContext.setMonth;
-  var currentMonth = moment(currentContext.dateState.date);
-  var nextMonth = moment(currentMonth).add(1, 'M');
+  var currentMonth = moment(currentContext.dateState.date, 'MMMM YYYY');
+  var nextMonth = moment(currentMonth, 'MMMM YYYY').add(1, 'M');
 
   function createCalendar(month) {
     var daysInMonth = moment(month).daysInMonth();
@@ -48,7 +48,6 @@ function Calendar(props) {
   }
 
   function onClickHandler(type) {
-    event.stopPropagation();
     // console.log(event)
     setMonth({type: type});
   }
@@ -69,7 +68,7 @@ function Calendar(props) {
         <table className={styles.cal}>
           <thead>
             <tr>
-              <th className={styles.calHeader} ><button onClick={() => {onClickHandler('decrement')}}>-</button></th>
+              <th><button className={styles.calArrow} onClick={() => {onClickHandler('decrement')}}>-</button></th>
               <th colSpan="5" className={styles.calHeader}>{`${currentMonth.format('MMMM YYYY')}`}</th>
               <th className={styles.calHeader}></th>
             </tr>
@@ -86,7 +85,7 @@ function Calendar(props) {
             <tr>
               <th className={styles.calHeader}></th>
               <th colSpan="5" className={styles.calHeader}>{`${nextMonth.format('MMMM YYYY')}`}</th>
-              <th className={styles.calHeader}><button onClick={() => {onClickHandler('increment')}}>+</button></th>
+              <th><button className={styles.calArrow} onClick={() => {onClickHandler('increment')}}>+</button></th>
             </tr>
           </thead>
           <tbody>
