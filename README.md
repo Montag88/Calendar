@@ -1,30 +1,24 @@
-# Project Name
+# Hotel Reservation Calendar
 
-> Project description
+> Microservice providing interactive reservation booking. Service will utilize microservice architecture and can be deployed with Docker and combined with other microservices.
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/8ers
 
 ## Table of Contents
 
-1. [Usage](#Usage)
+1. [Usage](#usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
 
 ## Usage
 
-> Some usage instructions
+> Front-End is developed with React Hooks, Back-End is served with ExpressJS and MongoDB.
 
 ## Requirements
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
+- Node 8.15.0
 
 ## Development
 
